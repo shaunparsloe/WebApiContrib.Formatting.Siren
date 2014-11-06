@@ -10,4 +10,3 @@ c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting
 c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\System.Web.Http.WebHost.xml
 c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\obj\Debug\WebApiContrib.Formatting.Siren.dll
 c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\obj\Debug\WebApiContrib.Formatting.Siren.pdb
-c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\obj\Debug\WebApiContrib.Formatting.Siren.csprojResolveAssemblyReference.cache

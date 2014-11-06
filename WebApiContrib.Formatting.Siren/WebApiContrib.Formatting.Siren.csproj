@@ -56,11 +56,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action.cs" />
     <Compile Include="EmbeddedLink.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="Field.cs" />
+    <Compile Include="HTMLInputType.cs" />
+    <Compile Include="HTTP_Method.cs" />
     <Compile Include="JsonHelpers.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReservedWords.cs" />
     <Compile Include="SirenInterfaces.cs" />
     <Compile Include="SirenMediaTypeFormatter.cs" />
     <Compile Include="SubEntity.cs" />

@@ -51,22 +51,22 @@ namespace WebApiContrib.Formatting.Siren
             {
                 if (typeof(IEntity).IsAssignableFrom(type))
                 {
-                    var objectToSerialize = FormatSirenEntity((Entity)value);
+                    var objectToSerialize = SerializeSirenEntity((IEntity)value);
                     JsonHelpers.WriteJsonToStream(stream, objectToSerialize);
                 }
             });
         }
 
-        private object BuildSirenDocument(object models, Stream stream, string contenttype)
-        {
-            List<Dictionary<string, object>> items = new List<Dictionary<string, object>>();
+        //private object BuildSirenDocument(object models, Stream stream, string contenttype)
+        //{
+        //    List<Dictionary<string, object>> items = new List<Dictionary<string, object>>();
 
-            items.Add(this.FormatSirenEntity((Entity)models));
+        //    items.Add(this.FormatSirenEntity((Entity)models));
 
-            return items;
-        }
+        //    return items;
+        //}
 
-        private Dictionary<string, object> FormatSirenEntity(Entity entityItem)
+        private Dictionary<string, object> SerializeSirenEntity(IEntity entityItem)
         {
             Dictionary<string, object> resultantEntity = new Dictionary<string, object>();
             Dictionary<string, object> entityProperties = new Dictionary<string, object>();
@@ -88,13 +88,7 @@ namespace WebApiContrib.Formatting.Siren
             {
                 if (prop.GetValue(entityItem, null) != null)
                 {
-                    if (prop.Name != "Properties" &&
-                        prop.Name != "Entities" &&
-                        prop.Name != "Class" &&
-                        prop.Name != "Links" &&
-                        prop.Name != "Actions" &&
-                        prop.Name != "Rel" &&
-                        prop.Name != "Title")
+                    if (!ReservedWords.ListOfWords().Contains(prop.Name))
                     {
                         entityProperties.Add(prop.Name, prop.GetValue(entityItem, null));
                     }
@@ -114,12 +108,12 @@ namespace WebApiContrib.Formatting.Siren
                     if (embeddedSirenSubEntityObject.GetType().IsSubclassOf(typeof(EmbeddedLink)) ||
                         embeddedSirenSubEntityObject.GetType() == typeof(EmbeddedLink))
                     {
-                        subEntities.Add(this.FormatSirenEmbeddedLink((EmbeddedLink)embeddedSirenSubEntityObject));
+                        subEntities.Add(this.SerializeSirenEmbeddedLink((EmbeddedLink)embeddedSirenSubEntityObject));
                     }
 
                     if (embeddedSirenSubEntityObject.GetType().IsSubclassOf(typeof(SubEntity)))
                     {
-                        subEntities.Add(this.FormatSirenSubEntity((SubEntity)embeddedSirenSubEntityObject));
+                        subEntities.Add(this.SerializeSirenSubEntity((SubEntity)embeddedSirenSubEntityObject));
                     }
                 }
 
@@ -139,7 +133,7 @@ namespace WebApiContrib.Formatting.Siren
             return resultantEntity;
         }
 
-        private Dictionary<string, object> FormatSirenSubEntity(SubEntity subEntityItem)
+        private Dictionary<string, object> SerializeSirenSubEntity(SubEntity subEntityItem)
         {
             Dictionary<string, object> resultantSubEntity = new Dictionary<string, object>();
             Dictionary<string, object> entityProperties = new Dictionary<string, object>();
@@ -161,18 +155,9 @@ namespace WebApiContrib.Formatting.Siren
             // Any property that is not one of the "reserved" names
             foreach (System.Reflection.PropertyInfo prop in properties)
             {
-                if (prop.GetValue(subEntityItem, null) != null)
+                if (!ReservedWords.ListOfWords().Contains(prop.Name))
                 {
-                    if (prop.Name != "Properties" &&
-                        prop.Name != "Entities" &&
-                        prop.Name != "Class" &&
-                        prop.Name != "Links" &&
-                        prop.Name != "Actions" &&
-                        prop.Name != "Rel" &&
-                        prop.Name != "Title")
-                    {
-                        entityProperties.Add(prop.Name, prop.GetValue(subEntityItem, null));
-                    }
+                    entityProperties.Add(prop.Name, prop.GetValue(subEntityItem, null));
                 }
             }
 
@@ -199,7 +184,7 @@ namespace WebApiContrib.Formatting.Siren
             return resultantSubEntity;
         }
 
-        private Dictionary<string, object> FormatSirenEmbeddedLink(EmbeddedLink embeddedLink)
+        private Dictionary<string, object> SerializeSirenEmbeddedLink(EmbeddedLink embeddedLink)
         {
             Dictionary<string, object> retval = new Dictionary<string, object>();
 
