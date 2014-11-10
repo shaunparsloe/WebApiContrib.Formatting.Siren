@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebApiContrib.Formatting.Siren
 {
-    /// -------------------------------------------------------------------------------------------------
     /// <summary>   Interface for entity. </summary>
-    /// -------------------------------------------------------------------------------------------------
     public interface IEntity
     {
         /// -------------------------------------------------------------------------------------------------
@@ -75,19 +73,9 @@ namespace WebApiContrib.Formatting.Siren
         string Title { get; set; }
     }
 
-    /// -------------------------------------------------------------------------------------------------
     /// <summary>   Interface for sub entity. </summary>
-
-    /// -------------------------------------------------------------------------------------------------
     public interface ISubEntity
     {
-        /// -------------------------------------------------------------------------------------------------
-        /// <summary>   Gets or sets the class. </summary>
-        ///
-        /// <value> The class. </value>
-        /// -------------------------------------------------------------------------------------------------
-        List<string> Class { get; set; }
-
         /// -------------------------------------------------------------------------------------------------
         /// <summary>   Gets or sets the relative. </summary>
         ///
@@ -96,14 +84,10 @@ namespace WebApiContrib.Formatting.Siren
         List<string> Rel { get; set; }
     }
 
-    /// -------------------------------------------------------------------------------------------------
-    /// <summary>
-    /// Links represent navigational transitions. In JSON Siren, links are represented as an array
+    /// <summary>Links represent navigational transitions. In JSON Siren, links are represented as an array
     /// inside the entity, such as
     /// { "links": [{ "rel": [ "self" ], "href": "http:// api.x.io/orders/42"}] }
     /// </summary>
-
-    /// -------------------------------------------------------------------------------------------------
     public interface ILink
     {
         /// -------------------------------------------------------------------------------------------------
