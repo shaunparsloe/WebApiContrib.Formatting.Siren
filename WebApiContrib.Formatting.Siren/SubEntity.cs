@@ -36,5 +36,12 @@ namespace WebApiContrib.Formatting.Siren
                 this._rel = value; 
             }
         }
+
+        public ISubEntity AddRel(string rel)
+        {
+            this.Rel.Add(rel);
+            return this;
+        }
+
     }
 }

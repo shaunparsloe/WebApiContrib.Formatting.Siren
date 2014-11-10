@@ -144,5 +144,49 @@ namespace WebApiContrib.Formatting.Siren
         public Entity()
         {
         }
+
+        ///-------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Initializes a new instance of the WebApiContrib.Formatting.Siren.Entity class.
+        /// </summary>
+        /// 
+        /// <param name="className">    Class name of the object. </param>
+        ///-------------------------------------------------------------------------------------------------
+        public Entity(string className)
+        {
+            this.Class.Add(className);
+        }
+
+        public IEntity AddClass(string className)
+        {
+            this.Class.Add(className);
+            return this;
+        }
+
+        public IEntity AddProperty(string propertyName, object propertyValue)
+        {
+            this.Properties.Add(propertyName, propertyValue);
+            return this;
+        }
+
+        public IEntity AddSubEntity(ISubEntity subEntity)
+        {
+            this.Entities.Add(subEntity);
+            return this;
+        }
+
+        public IEntity AddLink(ILink link)
+        {
+            this.Links.Add(link);
+            return this;
+        }
+
+        public IEntity AddAction(Action action)
+        {
+            this.Actions.Add(action);
+            return this;
+        }
+
+
      }
 }

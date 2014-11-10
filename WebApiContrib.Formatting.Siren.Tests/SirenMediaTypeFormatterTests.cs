@@ -130,7 +130,7 @@ namespace WebApiContrib.Formatting.Siren.Tests
             // Arrange
             Car myCar = new Car();
             EmbeddedLink embeddedLink = new EmbeddedLink(new Uri("https://www.test.com"), "Embedded Link Class", "Embedded Link Rel");
-            myCar.Entities.Add(embeddedLink);
+            myCar.AddSubEntity(embeddedLink);
 
             // Act
             IEntity entityAfter = GetIEntityResultsFromWriteToStreamAsync(myCar);
@@ -161,11 +161,13 @@ namespace WebApiContrib.Formatting.Siren.Tests
             myWheel.id = 1;
             myWheel.Size = "124x55x18";
 
-            myWheel.Class.Add("Wheel");
             myWheel.Title = "My Car Wheel";
-            myWheel.Rel.Add("/rels/car/wheel");
-            myWheel.Actions.Add(new Action("Inflate", "Inflate the wheel", HTTP_Method.PUT, new Uri("https://api.test.com/wheel/inflate")));
-            myWheel.Links.Add(new SelfLink(new Uri("https://api.test.com/wheel/1")));
+            myWheel.AddRel("/rels/car/wheel");
+
+            myWheel.AddClass("Wheel")
+                .AddAction(new Action("Inflate", "Inflate the wheel", HTTP_Method.PUT, new Uri("https://api.test.com/wheel/inflate")))
+                .AddLink(new SelfLink(new Uri("https://api.test.com/wheel/1")));
+
             myCar.Entities.Add(myWheel);
 
             // Act

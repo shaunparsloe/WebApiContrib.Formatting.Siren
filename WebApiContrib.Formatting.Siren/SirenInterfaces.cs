@@ -71,6 +71,18 @@ namespace WebApiContrib.Formatting.Siren
         /// <value> The title. </value>
         /// -------------------------------------------------------------------------------------------------
         string Title { get; set; }
+
+
+        IEntity AddClass(string className);
+
+
+        IEntity AddProperty(string propertyName, object propertyValue);
+
+        IEntity AddSubEntity(ISubEntity subEntity);
+
+        IEntity AddLink(ILink link);
+
+        IEntity AddAction(Action action);
     }
 
     /// <summary>   Interface for sub entity. </summary>
@@ -82,6 +94,8 @@ namespace WebApiContrib.Formatting.Siren
         /// <value> The relative. </value>
         /// -------------------------------------------------------------------------------------------------
         List<string> Rel { get; set; }
+
+        ISubEntity AddRel(string rel);
     }
 
     /// <summary>Links represent navigational transitions. In JSON Siren, links are represented as an array
@@ -118,4 +132,6 @@ namespace WebApiContrib.Formatting.Siren
         /// -------------------------------------------------------------------------------------------------
         string Type { get; set; }
     }
+
+
 }

@@ -36,5 +36,11 @@ namespace WebApiContrib.Formatting.Siren
             this.Class = paramClass;
             this.Rel = rel;
         }
+
+        public ISubEntity AddRel(string rel)
+        {
+            this.Rel.Add(rel);
+            return this;
+        }
     }
 }
