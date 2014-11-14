@@ -168,7 +168,22 @@ namespace WebApiContrib.Formatting.Siren
 
             if (subEntityItem.Entities != null)
             {
-                resultantSubEntity.Add("entities", subEntityItem.Entities);
+                List<object> subEntities = new List<object>();
+                foreach (object embeddedSirenSubEntityObject in subEntityItem.Entities)
+                {
+                    if (embeddedSirenSubEntityObject.GetType().IsSubclassOf(typeof(EmbeddedLink)) ||
+                        embeddedSirenSubEntityObject.GetType() == typeof(EmbeddedLink))
+                    {
+                        subEntities.Add(this.SerializeSirenEmbeddedLink((EmbeddedLink)embeddedSirenSubEntityObject));
+                    }
+
+                    if (embeddedSirenSubEntityObject.GetType().IsSubclassOf(typeof(SubEntity)))
+                    {
+                        subEntities.Add(this.SerializeSirenSubEntity((SubEntity)embeddedSirenSubEntityObject));
+                    }
+                }
+
+                resultantSubEntity.Add("entities", subEntities);
             }
 
             if (subEntityItem.Actions.Count > 0)
