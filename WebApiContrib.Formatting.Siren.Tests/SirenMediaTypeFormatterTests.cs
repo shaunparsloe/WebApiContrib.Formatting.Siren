@@ -216,6 +216,95 @@ namespace WebApiContrib.Formatting.Siren.Tests
         }
 
         [Fact]
+        public void WriteToStreamAsync_Serializes_SubEntities_Of_SubEntitiess_Correctly()
+        {
+            // Arrange
+            Car myCar = new Car();
+            Wheel myWheel = new Wheel();
+
+            WheelNut myNut = new WheelNut();
+            myNut.IsLockNut = true;
+            myNut.AddClass("WheelNut");
+            myNut.AddRel("/rels/wheelnut");
+
+            // Add the subentity to the subentity
+            myWheel.AddSubEntity(myNut);
+
+            myWheel.id = 1;
+            myWheel.Size = "124x55x18";
+
+            myWheel.Title = "My Car Wheel";
+            myWheel.AddRel("/rels/car/wheel");
+
+            myWheel.AddClass("Wheel")
+                .AddAction(new Action("Inflate", "Inflate the wheel", HTTP_Method.PUT, new Uri("https://api.test.com/wheel/inflate")))
+                .AddLink(new SelfLink(new Uri("https://api.test.com/wheel/1")));
+
+
+
+            myCar.Entities.Add(myWheel);
+
+            // Act
+            IEntity entityAfter = GetIEntityResultsFromWriteToStreamAsync(myCar);
+
+            // Assert - Have properties
+            string entityString = entityAfter.Entities[0].ToString();
+
+            string expectedString = @"{
+  ""class"": [
+    ""Wheel""
+  ],
+  ""title"": ""My Car Wheel"",
+  ""rel"": [
+    ""/rels/car/wheel""
+  ],
+  ""properties"": {
+    ""id"": 1,
+    ""size"": ""124x55x18""
+  },
+  ""entities"": [
+    {
+      ""class"": [
+        ""WheelNut""
+      ],
+      ""rel"": [
+        ""/rels/wheelnut""
+      ],
+      ""properties"": {
+        ""id"": 0,
+        ""isLockNut"": true
+      },
+      ""entities"": []
+    }
+  ],
+  ""actions"": [
+    {
+      ""name"": ""Inflate"",
+      ""class"": [
+        ""Inflate""
+      ],
+      ""method"": ""PUT"",
+      ""href"": ""https://api.test.com/wheel/inflate"",
+      ""title"": ""Inflate the wheel"",
+      ""type"": ""application/json"",
+      ""fields"": []
+    }
+  ],
+  ""links"": [
+    {
+      ""rel"": [
+        ""self""
+      ],
+      ""href"": ""https://api.test.com/wheel/1"",
+      ""title"": null,
+      ""type"": null
+    }
+  ]
+}";
+            Assert.Equal(expectedString, entityString);
+        }
+
+        [Fact]
         public void WriteToStreamAsync_Serializes_Actions_Correctly()
         {
             // Arrange
@@ -290,6 +379,12 @@ namespace WebApiContrib.Formatting.Siren.Tests
         {
             public int id { get; set; }
             public string Size { get; set; }
+        }
+
+        public class WheelNut : SubEntity
+        {
+            public int id { get; set; }
+            public bool IsLockNut { get; set; }
         }
 
         public class SelfLink : ILink
