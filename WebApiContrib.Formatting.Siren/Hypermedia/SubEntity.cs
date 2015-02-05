@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 
-namespace WebApiContrib.Formatting.Siren
+namespace WebApiContrib.MediaType.Hypermedia
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1309:FieldNamesMustNotBeginWithUnderscore", Justification = "Allowed.")]
     public abstract class SubEntity : Entity, ISubEntity // , ISerializable

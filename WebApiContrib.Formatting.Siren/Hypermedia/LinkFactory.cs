@@ -4,9 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http.Routing;
-using Fourth.APIFramework.Links;
 
-namespace Fourth.APIFramework.Siren
+namespace WebApiContrib.MediaType.Hypermedia
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1309:FieldNamesMustNotBeginWithUnderscore", Justification = "Allowed.")]
     public abstract class LinkFactory

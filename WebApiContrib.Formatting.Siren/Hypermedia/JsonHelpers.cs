@@ -6,7 +6,7 @@ using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace WebApiContrib.Formatting.Siren
+namespace WebApiContrib.MediaType.Hypermedia
 {
     public static class JsonHelpers
     {

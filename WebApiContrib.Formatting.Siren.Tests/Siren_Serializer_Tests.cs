@@ -9,71 +9,15 @@ using System.Net.Http.Headers;
 using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using WebApiContrib.MediaType.Hypermedia;
 
 namespace WebApiContrib.Formatting.Siren.Tests
 {
-    public class SirenMediaTypeFormatterTests
+    public class Siren_Serializer_Tests
     {
         private SirenMediaTypeFormatter formatter = new SirenMediaTypeFormatter();
         private const string SirenMediaType = "application/vnd.siren+json";
         private MediaTypeHeaderValue SirenMediaTypeHeader = new MediaTypeHeaderValue(SirenMediaType);
-
-        [Fact]
-        public void DefaultMediaType_ReturnsApplicationJson()
-        {
-            MediaTypeHeaderValue mediaType = SirenMediaTypeFormatter.DefaultMediaType;
-            Assert.NotNull(mediaType);
-            Assert.Equal("application/json", mediaType.MediaType);
-        }
-
-        [Theory]
-        [InlineData(typeof(Entity))]
-        [InlineData(typeof(SubEntity))]
-        public void CanReadType_ReturnsTrue_On_IEntity(Type type)
-        {
-            formatter.CanReadType(type).ShouldBeTrue();
-        }
-
-        [Theory]
-        [InlineData(typeof(List<object>))]
-        [InlineData(typeof(object))]
-        [InlineData(typeof(string))]
-        public void CanReadType_ReturnsFalse_On_Non_IEntity(Type type)
-        {
-            formatter.CanReadType(type).ShouldBeFalse();
-        }
-
-
-        [Theory]
-        [InlineData(typeof(Entity))]
-        [InlineData(typeof(SubEntity))]
-        public void CanWriteType_ReturnsTrue_On_IEntity(Type type)
-        {
-            formatter.CanWriteType(type).ShouldBeTrue();
-        }
-
-        [Theory]
-        [InlineData(typeof(List<object>))]
-        [InlineData(typeof(object))]
-        [InlineData(typeof(string))]
-        public void CanWriteType_ReturnsFalse_On_Non_IEntity(Type type)
-        {
-            formatter.CanWriteType(type).ShouldBeFalse();
-        }
-
-        [Fact]
-        public void SetDefaultContentHeaders_Should_Set_Siren_As_Content_Header()
-        {
-            Type type = typeof(object);
-            HttpContentHeaders contentHeaders = FormattingUtilities.CreateEmptyContentHeaders();
-
-            // Act
-            formatter.SetDefaultContentHeaders(type, contentHeaders, SirenMediaTypeHeader);
-
-            // Assert
-            Assert.NotSame(SirenMediaTypeHeader, contentHeaders.ContentType);
-            Assert.Equal(SirenMediaType, contentHeaders.ContentType.MediaType);
-        }
 
         [Fact]
         public void WriteToStreamAsync_Serializes_Class_Correctly()
@@ -165,7 +109,7 @@ namespace WebApiContrib.Formatting.Siren.Tests
             myWheel.AddRel("/rels/car/wheel");
 
             myWheel.AddClass("Wheel")
-                .AddAction(new Action("Inflate", "Inflate the wheel", HTTP_Method.PUT, new Uri("https://api.test.com/wheel/inflate")))
+                .AddAction(new WebApiContrib.MediaType.Hypermedia.Action("Inflate", "Inflate the wheel", HTTP_Method.PUT, new Uri("https://api.test.com/wheel/inflate")))
                 .AddLink(new SelfLink(new Uri("https://api.test.com/wheel/1")));
 
             myCar.Entities.Add(myWheel);
@@ -175,43 +119,7 @@ namespace WebApiContrib.Formatting.Siren.Tests
 
             // Assert - Have properties
             string entityString = entityAfter.Entities[0].ToString();
-            string expectedString = @"{
-  ""class"": [
-    ""Wheel""
-  ],
-  ""title"": ""My Car Wheel"",
-  ""rel"": [
-    ""/rels/car/wheel""
-  ],
-  ""properties"": {
-    ""id"": 1,
-    ""size"": ""124x55x18""
-  },
-  ""entities"": [],
-  ""actions"": [
-    {
-      ""name"": ""Inflate"",
-      ""class"": [
-        ""Inflate""
-      ],
-      ""method"": ""PUT"",
-      ""href"": ""https://api.test.com/wheel/inflate"",
-      ""title"": ""Inflate the wheel"",
-      ""type"": ""application/json"",
-      ""fields"": []
-    }
-  ],
-  ""links"": [
-    {
-      ""rel"": [
-        ""self""
-      ],
-      ""href"": ""https://api.test.com/wheel/1"",
-      ""title"": null,
-      ""type"": null
-    }
-  ]
-}";
+            string expectedString = TestJSON.WheelClass();
             Assert.Equal(expectedString, entityString);
         }
 
@@ -237,7 +145,7 @@ namespace WebApiContrib.Formatting.Siren.Tests
             myWheel.AddRel("/rels/car/wheel");
 
             myWheel.AddClass("Wheel")
-                .AddAction(new Action("Inflate", "Inflate the wheel", HTTP_Method.PUT, new Uri("https://api.test.com/wheel/inflate")))
+                .AddAction(new WebApiContrib.MediaType.Hypermedia.Action("Inflate", "Inflate the wheel", HTTP_Method.PUT, new Uri("https://api.test.com/wheel/inflate")))
                 .AddLink(new SelfLink(new Uri("https://api.test.com/wheel/1")));
 
 
@@ -310,7 +218,7 @@ namespace WebApiContrib.Formatting.Siren.Tests
             // Arrange
             Car myCar = new Car();
             Uri actionUri = new Uri("https://api.test.com/car/start");
-            myCar.Actions.Add(new Action("Start", "Start the car", HTTP_Method.POST, actionUri));
+            myCar.Actions.Add(new WebApiContrib.MediaType.Hypermedia.Action("Start", "Start the car", HTTP_Method.POST, actionUri));
 
             // Act
             string entityAfter = GetStringResultsFromWriteToStreamAsync(myCar);
@@ -366,40 +274,6 @@ namespace WebApiContrib.Formatting.Siren.Tests
             string resultString = new StreamReader(memStream).ReadToEnd();
 
             return resultString;
-
-        }
-
-        public class Car : Entity
-        {
-            public string Colour { get; set; }
-            public int NumberOfWheels { get; set; }
-        }
-
-        public class Wheel : SubEntity
-        {
-            public int id { get; set; }
-            public string Size { get; set; }
-        }
-
-        public class WheelNut : SubEntity
-        {
-            public int id { get; set; }
-            public bool IsLockNut { get; set; }
-        }
-
-        public class SelfLink : ILink
-        {
-            public List<string> Rel { get; set; }
-            public string Href { get; set; }
-            public string Title { get; set; }
-            public string Type { get; set; }
-
-            public SelfLink(Uri href, string title = "Self")
-            {
-                this.Rel = new List<string>();
-                this.Rel.Add("self");
-                this.Href = href.ToString();
-            }
         }
 
     }

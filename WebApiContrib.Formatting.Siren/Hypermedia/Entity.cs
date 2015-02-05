@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace WebApiContrib.Formatting.Siren
+namespace WebApiContrib.MediaType.Hypermedia
 {
     /// -------------------------------------------------------------------------------------------------
     /// <summary> An Entity is a URI-addressable resource that has properties and actions associated with it. It may contain sub-entities and navigational links.

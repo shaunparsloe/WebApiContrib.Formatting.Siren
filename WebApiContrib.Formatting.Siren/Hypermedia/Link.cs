@@ -4,12 +4,12 @@ using System.Linq;
 using System.Web;
 using WebApiContrib.Formatting.Siren;
 
-namespace Fourth.APIFramework.Links
+namespace WebApiContrib.MediaType.Hypermedia
 {
     /// <summary>
     /// A base class for relation links
     /// </summary>
-    public class Link : WebApiContrib.Formatting.Siren.ILink
+    public class Link : WebApiContrib.MediaType.Hypermedia.ILink
     {
         public List<string> Rel { get; set; }
 
@@ -24,7 +24,7 @@ namespace Fourth.APIFramework.Links
         public Link()
         {
             this.Rel = new List<string>();
-            this.Method = HTTP_Method.GET.ToString();
+            this.Method = WebApiContrib.MediaType.Hypermedia.HTTP_Method.GET.ToString();
         }
 
         public Link(string relation, string href, string method = "GET", string title = null)

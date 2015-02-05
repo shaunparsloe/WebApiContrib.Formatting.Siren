@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiContrib.Formatting.Siren", "WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.csproj", "{CF3994F6-C75B-4D0A-8C44-8AB4BC8F0F7F}"
 EndProject
@@ -14,6 +14,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{581CAC52-A24E-4FCC-ACAA-58A57D685B62}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiContrib.Formatting.Siren.SampleWebHost", "WebApiContrib.Formatting.Siren.SampleWebHost\WebApiContrib.Formatting.Siren.SampleWebHost.csproj", "{6B8581E3-D208-4E31-B68C-0FD2E5822634}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9026AE1E-F970-4BA7-8959-01DBD61E1286}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

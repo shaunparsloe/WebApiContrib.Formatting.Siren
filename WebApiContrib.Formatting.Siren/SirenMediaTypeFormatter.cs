@@ -1,14 +1,22 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
+using WebApiContrib.MediaType.Hypermedia;
 
 namespace WebApiContrib.Formatting.Siren
 {
@@ -208,6 +216,127 @@ namespace WebApiContrib.Formatting.Siren
             retval.Add("Href", embeddedLink.Href);
 
             return retval;
+        }
+
+        public override sealed Task<Object> ReadFromStreamAsync(Type type, Stream readStream, HttpContent content, IFormatterLogger formatterLogger)
+        {
+
+            var jsonSerializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
+
+            var ser = JsonSerializer.Create(jsonSerializerSettings);
+
+            return Task.Factory.StartNew(() =>
+            {
+                using (var strdr = new StreamReader(readStream))
+                using (var jtr = new JsonTextReader(strdr))
+                {
+
+                    string jsonString = strdr.ReadToEnd();
+
+                    // var results = JsonConvert.DeserializeObject<dynamic>(jsonString);
+                    var array = JObject.Parse(jsonString);
+                    return DeSerializeSirenEntity(type, array);
+                }
+
+                //using (var strdr = new StreamReader(readStream))
+                //using (var jtr = new JsonTextReader(strdr))
+                //{
+                //    Dictionary<string, object> deserialized = (Dictionary<string, object>)ser.Deserialize(jtr, typeof(Dictionary<string, object>));
+                //    return DeSerializeSirenEntity(type, deserialized);
+                //}
+            });
+        }
+
+        private object DeSerializeSirenEntity(Type type, JObject deserialized)
+        {
+            dynamic entity = Activator.CreateInstance(type);
+
+            var jsonSerializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
+
+            var ser = JsonSerializer.Create(jsonSerializerSettings);
+
+  
+            foreach (JProperty property in deserialized.Properties())
+            {
+                switch (property.Name)
+                {
+                    case "class":
+                        foreach (JValue jvalue in property.Value)
+                        {
+                            string stringValue = jvalue.Value.ToString();
+                            entity.Class.Add(stringValue);
+                        }
+                        break;
+
+                    case "title":
+                        entity.Title = property.Value.ToString();
+                        break;
+
+
+                    case "rel":
+                        foreach (JValue jvalue in property.Value)
+                        {
+                            entity.Rel.Add(jvalue.Value.ToString());
+                        }
+                        break;
+
+                    case "properties":
+                        foreach (JProperty objectProperty in property.Value)
+                        {
+                            string x = objectProperty.Value.ToString();
+                            string propertyName = objectProperty.Name.ToString();
+
+                            PropertyInfo prop = entity.GetType()
+                                .GetProperty(propertyName,
+                                    BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                            if (null != prop && prop.CanWrite)
+                            {
+                                var val = Convert.ChangeType(objectProperty.Value, prop.PropertyType);
+                                prop.SetValue(entity, val, null);
+                            }
+
+                            entity.Class.Add(propertyName);
+                        }
+                        break;
+
+                    case "entities":
+                        foreach (JObject subEntityJObject in property.Value)
+                        {
+                            // TODO: Get the correct type to pass into deserialize
+                            DeSerializeSirenEntity(typeof (ISubEntity), subEntityJObject);
+                        }
+                        break;
+
+                    case "actions":
+                        foreach (JObject jObject in property.Value)
+                        {
+                            WebApiContrib.MediaType.Hypermedia.Action action =
+                                jObject.ToObject<WebApiContrib.MediaType.Hypermedia.Action>();
+                            entity.AddAction(action);
+                        }
+                        break;
+
+                    case "links":
+                        foreach (JObject jObject in property.Value)
+                        {
+                            WebApiContrib.MediaType.Hypermedia.Link link =
+                                jObject.ToObject<WebApiContrib.MediaType.Hypermedia.Link>();
+                            entity.AddLink(link);
+                        }
+                        break;
+
+                    default:
+                        Debug.WriteLine("Key " + property.ToString() + " is not supported by the Siren Deserializer");
+                        break;
+                }
+            }
+            return entity;
         }
     }
 }

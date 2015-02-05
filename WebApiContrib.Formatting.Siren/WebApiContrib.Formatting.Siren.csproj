@@ -56,19 +56,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Action.cs" />
-    <Compile Include="EmbeddedLink.cs" />
-    <Compile Include="Entity.cs" />
-    <Compile Include="Field.cs" />
-    <Compile Include="HTMLInputType.cs" />
-    <Compile Include="HTTP_Method.cs" />
-    <Compile Include="JsonHelpers.cs" />
-    <Compile Include="Link.cs" />
+    <Compile Include="Hypermedia\Action.cs" />
+    <Compile Include="Hypermedia\EmbeddedLink.cs" />
+    <Compile Include="Hypermedia\Entity.cs" />
+    <Compile Include="Hypermedia\Field.cs" />
+    <Compile Include="Hypermedia\HTMLInputType.cs" />
+    <Compile Include="Hypermedia\HTTP_Method.cs" />
+    <Compile Include="Hypermedia\JsonHelpers.cs" />
+    <Compile Include="Hypermedia\Link.cs" />
+    <Compile Include="Hypermedia\LinkFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReservedWords.cs" />
-    <Compile Include="SirenInterfaces.cs" />
+    <Compile Include="Hypermedia\ReservedWords.cs" />
+    <Compile Include="Hypermedia\SirenInterfaces.cs" />
     <Compile Include="SirenMediaTypeFormatter.cs" />
-    <Compile Include="SubEntity.cs" />
+    <Compile Include="Hypermedia\SubEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

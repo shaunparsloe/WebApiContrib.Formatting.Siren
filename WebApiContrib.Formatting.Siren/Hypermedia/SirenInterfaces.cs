@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebApiContrib.Formatting.Siren
+namespace WebApiContrib.MediaType.Hypermedia
 {
     /// <summary>   Interface for entity. </summary>
     public interface IEntity
