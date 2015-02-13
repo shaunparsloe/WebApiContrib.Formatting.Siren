@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using WebApiContrib.Formatting.Siren;
 
 namespace WebApiContrib.MediaType.Hypermedia
 {
@@ -24,7 +23,7 @@ namespace WebApiContrib.MediaType.Hypermedia
         public Link()
         {
             this.Rel = new List<string>();
-            this.Method = WebApiContrib.MediaType.Hypermedia.HTTP_Method.GET.ToString();
+            this.Method = HTTP_Method.GET.ToString();
         }
 
         public Link(string relation, string href, string method = "GET", string title = null)

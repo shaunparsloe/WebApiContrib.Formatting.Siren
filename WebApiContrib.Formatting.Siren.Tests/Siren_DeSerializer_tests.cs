@@ -21,7 +21,7 @@ namespace WebApiContrib.Formatting.Siren.Tests
         private MediaTypeHeaderValue SirenMediaTypeHeader = new MediaTypeHeaderValue(SirenMediaType);
 
         [Fact]
-        public void ReadFromStreamAsync_Serializes_Class_Correctly()
+        public void ReadFromStreamAsync_DeSerializes_Class_Correctly()
         {
             // Arrange
             string inputString = @"
@@ -38,12 +38,139 @@ namespace WebApiContrib.Formatting.Siren.Tests
                 var task = formatter.ReadFromStreamAsync(typeof(Car), stream, content, null);
                 Car car = task.Result as Car;
                 Assert.Equal("Car", car.Class[0]);
-                //Assert.AreEqual("1", car.Value);
             }
         }
 
         [Fact]
-        public void ReadFromStreamAsync_Serializes_Entity_Correctly()
+        public void ReadFromStreamAsync_Deserializes_Title_Correctly()
+        {
+            // Arrange
+            Car car = new Car();
+            string inputString =
+                "{\"class\":[],\"title\":\"Car Title\",\"properties\":{\"numberOfWheels\":0},\"entities\":[]}";
+
+            // Act
+            using (MemoryStream stream = new MemoryStream(System.Text.Encoding.Default.GetBytes(inputString)))
+            {
+                var content = new StreamContent(stream);
+
+                var task = formatter.ReadFromStreamAsync(typeof(Car), stream, content, null);
+                car = task.Result as Car;
+            }
+
+            // Assert
+            Assert.Equal("Car Title", car.Title);
+          
+        }
+
+        
+        [Fact]
+        public void ReadFromStreamAsync_Deserializes_Actions_Correctly()
+        {
+            // Arrange
+            Car car = new Car();
+            string inputString =
+                "{\"class\":[],\"properties\":{\"numberOfWheels\":0},\"entities\":[],\"actions\":[{\"name\":\"Start\",\"class\":[\"StartAction\"],\"method\":\"POST\",\"href\":\"https://api.test.com/car/start\",\"title\":\"Start the car\",\"type\":\"application/json\",\"fields\":[]}]}";
+
+            // Act
+            using (MemoryStream stream = new MemoryStream(System.Text.Encoding.Default.GetBytes(inputString)))
+            {
+                var content = new StreamContent(stream);
+
+                var task = formatter.ReadFromStreamAsync(typeof(Car), stream, content, null);
+                car = task.Result as Car;
+            }
+
+            WebApiContrib.MediaType.Hypermedia.Action startTheCarAction = car.Actions[0];
+
+            // Assert
+            Assert.Equal("Start", startTheCarAction.Name);
+            Assert.Equal("StartAction", startTheCarAction.Class[0]);
+            Assert.Equal(HTTP_Method.POST, startTheCarAction.Method);
+            Assert.Equal("https://api.test.com/car/start", startTheCarAction.Href.ToString());
+            Assert.Equal("Start the car", startTheCarAction.Title);
+            Assert.Equal("application/json", startTheCarAction.Type);
+          
+        }
+
+        [Fact]
+        public void ReadFromStreamAsync_Deserializes_Properties_Correctly()
+        {
+            // Arrange
+            Car car = new Car();
+            string inputString =
+                "{\"class\":[],\"properties\":{\"colour\":\"Black\",\"numberOfWheels\":5},\"entities\":[]}";
+
+            // Act
+            using (MemoryStream stream = new MemoryStream(System.Text.Encoding.Default.GetBytes(inputString)))
+            {
+                var content = new StreamContent(stream);
+
+                var task = formatter.ReadFromStreamAsync(typeof(Car), stream, content, null);
+                car = task.Result as Car;
+            }
+
+            // Assert
+            Assert.Equal("Black", car.Colour);
+            Assert.Equal(5, car.NumberOfWheels);
+        }
+
+        [Fact]
+        public void ReadFromStreamAsync_Deserializes_EmbeddedLinks_Correctly()
+        {
+            // Arrange
+            Car car = new Car();
+            EmbeddedLink embeddedLink = new EmbeddedLink(new Uri("https://www.test.com"), "Embedded Link Class", "Embedded Link Rel");
+            string inputString =
+                "{\"class\":[],\"properties\":{\"numberOfWheels\":0},\"entities\":[{\"class\":[\"Embedded Link Class\"],\"rel\":[\"Embedded Link Rel\"],\"href\":\"https://www.test.com\"}]}";
+
+            // Act
+            using (MemoryStream stream = new MemoryStream(System.Text.Encoding.Default.GetBytes(inputString)))
+            {
+                var content = new StreamContent(stream);
+
+                var task = formatter.ReadFromStreamAsync(typeof(Car), stream, content, null);
+                car = task.Result as Car;
+            }
+
+            EmbeddedLink deserialisedEmbeddedLink = (EmbeddedLink)car.Entities[0];
+
+            // Assert
+            Assert.Equal(embeddedLink.Class[0], deserialisedEmbeddedLink.Class[0]);
+            Assert.Equal(embeddedLink.Rel[0], deserialisedEmbeddedLink.Rel[0]);
+            Assert.Equal(embeddedLink.Href, deserialisedEmbeddedLink.Href);
+
+        }
+
+        [Fact]
+        public void ReadFromStreamAsync_Deserializes_Links_Correctly()
+        {
+            // Arrange
+            Car car = new Car();
+            string inputString =
+                @"{""class"":[],""properties"":{""numberOfWheels"":0},""entities"":[],""links"":[{""rel"":[""self""],""href"":""https://api.test.com/home"",""title"":""LinkTitle"",""type"":null}]}";
+
+            // Act
+            using (MemoryStream stream = new MemoryStream(System.Text.Encoding.Default.GetBytes(inputString)))
+            {
+                var content = new StreamContent(stream);
+
+                var task = formatter.ReadFromStreamAsync(typeof(Car), stream, content, null);
+                car = task.Result as Car;
+            }
+
+            Link deserializedLink = (Link)car.Links[0];
+
+            // Assert
+            Assert.Equal("https://api.test.com/home", deserializedLink.Href.ToString());
+            Assert.Equal("self", deserializedLink.Rel[0]);
+            Assert.Equal("LinkTitle", deserializedLink.Title);
+            Assert.Equal("GET", deserializedLink.Method);
+
+        }
+
+        [Fact]
+        public void ReadFromStreamAsync_DeSerializes_Entity_Correctly()
         {
             // Arrange
             string inputString = TestJSON.WheelClass();
@@ -69,5 +196,6 @@ namespace WebApiContrib.Formatting.Siren.Tests
                 //Assert.AreEqual("1", car.Value);
             }
         }
+
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace WebApiContrib.MediaType.Hypermedia
 {
@@ -30,6 +31,7 @@ namespace WebApiContrib.MediaType.Hypermedia
             this.Rel.Add(rel);
         }
 
+        [JsonConstructor]
         public EmbeddedLink(Uri href, List<string> paramClass, List<string> rel)
         {
             this.Href = href;

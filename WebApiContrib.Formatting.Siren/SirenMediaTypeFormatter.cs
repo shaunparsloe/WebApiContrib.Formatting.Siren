@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -98,7 +96,18 @@ namespace WebApiContrib.Formatting.Siren
                 {
                     if (!ReservedWords.ListOfWords().Contains(prop.Name))
                     {
-                        entityProperties.Add(prop.Name, prop.GetValue(entityItem, null));
+                        bool ignore = false;
+                        foreach (var attrib in prop.CustomAttributes)
+                        {
+                            if (attrib.AttributeType.FullName == "WebApiContrib.Formatting.Siren.SirenIgnoreAttribute")
+                            {
+                                ignore = true;
+                            }
+                        }
+                        if (!ignore)
+                        {
+                            entityProperties.Add(prop.Name, prop.GetValue(entityItem, null));
+                        }
                     }
                 }
             }
@@ -119,7 +128,7 @@ namespace WebApiContrib.Formatting.Siren
                         subEntities.Add(this.SerializeSirenEmbeddedLink((EmbeddedLink)embeddedSirenSubEntityObject));
                     }
 
-                    if (embeddedSirenSubEntityObject.GetType().IsSubclassOf(typeof(SubEntity)))
+                    if (typeof(SubEntity).IsAssignableFrom(embeddedSirenSubEntityObject.GetType()))
                     {
                         subEntities.Add(this.SerializeSirenSubEntity((SubEntity)embeddedSirenSubEntityObject));
                     }
@@ -163,9 +172,23 @@ namespace WebApiContrib.Formatting.Siren
             // Any property that is not one of the "reserved" names
             foreach (System.Reflection.PropertyInfo prop in properties)
             {
-                if (!ReservedWords.ListOfWords().Contains(prop.Name))
+                if (prop.GetValue(subEntityItem, null) != null)
                 {
-                    entityProperties.Add(prop.Name, prop.GetValue(subEntityItem, null));
+                    if (!ReservedWords.ListOfWords().Contains(prop.Name))
+                    {
+                        bool ignore = false;
+                        foreach (var attrib in prop.CustomAttributes)
+                        {
+                            if (attrib.AttributeType.FullName == "WebApiContrib.Formatting.Siren.SirenIgnoreAttribute")
+                            {
+                                ignore = true;
+                            }
+                        }
+                        if (!ignore)
+                        {
+                            entityProperties.Add(prop.Name, prop.GetValue(subEntityItem, null));
+                        }
+                    }
                 }
             }
 
@@ -261,7 +284,7 @@ namespace WebApiContrib.Formatting.Siren
 
             var ser = JsonSerializer.Create(jsonSerializerSettings);
 
-  
+
             foreach (JProperty property in deserialized.Properties())
             {
                 switch (property.Name)
@@ -309,7 +332,18 @@ namespace WebApiContrib.Formatting.Siren
                         foreach (JObject subEntityJObject in property.Value)
                         {
                             // TODO: Get the correct type to pass into deserialize
-                            DeSerializeSirenEntity(typeof (ISubEntity), subEntityJObject);
+                            if (subEntityJObject.Children().Contains("rel"))
+                            {
+                                DeSerializeSirenEntity(typeof(SubEntity), subEntityJObject);
+                            }
+                            else
+                            {
+                                // DeSerializeSirenEntity(typeof(EmbeddedLink), subEntityJObject);
+                                WebApiContrib.MediaType.Hypermedia.EmbeddedLink link =
+                                    subEntityJObject.ToObject<WebApiContrib.MediaType.Hypermedia.EmbeddedLink>();
+                                entity.AddSubEntity(link);
+                            }
+                            
                         }
                         break;
 
