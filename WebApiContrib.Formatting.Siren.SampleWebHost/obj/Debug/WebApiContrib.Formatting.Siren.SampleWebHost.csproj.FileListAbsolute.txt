@@ -12,3 +12,17 @@ c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting
 c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\obj\Debug\WebApiContrib.Formatting.Siren.SampleWebHost.csprojResolveAssemblyReference.cache
 c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\obj\Debug\WebApiContrib.Formatting.Siren.SampleWebHost.dll
 c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\obj\Debug\WebApiContrib.Formatting.Siren.SampleWebHost.pdb
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\bin\WebApiContrib.Formatting.Siren.SampleWebHost.dll.config
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\bin\WebApiContrib.Formatting.Siren.SampleWebHost.dll
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\bin\WebApiContrib.Formatting.Siren.SampleWebHost.pdb
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\bin\Newtonsoft.Json.dll
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\bin\System.Net.Http.Formatting.dll
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\bin\System.Web.Http.dll
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\bin\System.Web.Http.WebHost.dll
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\bin\Newtonsoft.Json.xml
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\bin\System.Net.Http.Formatting.xml
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\bin\System.Web.Http.xml
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\bin\System.Web.Http.WebHost.xml
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\obj\Debug\WebApiContrib.Formatting.Siren.SampleWebHost.csprojResolveAssemblyReference.cache
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\obj\Debug\WebApiContrib.Formatting.Siren.SampleWebHost.dll
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.SampleWebHost\obj\Debug\WebApiContrib.Formatting.Siren.SampleWebHost.pdb

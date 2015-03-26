@@ -10,3 +10,15 @@ c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting
 c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\System.Web.Http.WebHost.xml
 c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\obj\Debug\WebApiContrib.Formatting.Siren.dll
 c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\obj\Debug\WebApiContrib.Formatting.Siren.pdb
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\WebApiContrib.Formatting.Siren.dll
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\WebApiContrib.Formatting.Siren.pdb
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\Newtonsoft.Json.dll
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\System.Net.Http.Formatting.dll
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\System.Web.Http.dll
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\System.Web.Http.WebHost.dll
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\System.Net.Http.Formatting.xml
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\System.Web.Http.xml
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\System.Web.Http.WebHost.xml
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\obj\Debug\WebApiContrib.Formatting.Siren.csprojResolveAssemblyReference.cache
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\obj\Debug\WebApiContrib.Formatting.Siren.dll
+C:\Fourth\Tradesimple\GIT\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\obj\Debug\WebApiContrib.Formatting.Siren.pdb
