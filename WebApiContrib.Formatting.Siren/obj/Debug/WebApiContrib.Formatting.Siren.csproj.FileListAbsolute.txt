@@ -10,3 +10,15 @@ c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting
 c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\System.Web.Http.WebHost.xml
 c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\obj\Debug\WebApiContrib.Formatting.Siren.dll
 c:\users\sparsloe\documents\visual studio 2013\Projects\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\obj\Debug\WebApiContrib.Formatting.Siren.pdb
+C:\Users\sparsloe\Documents\GitHub\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\WebApiContrib.Formatting.Siren.dll
+C:\Users\sparsloe\Documents\GitHub\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\WebApiContrib.Formatting.Siren.pdb
+C:\Users\sparsloe\Documents\GitHub\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\Newtonsoft.Json.dll
+C:\Users\sparsloe\Documents\GitHub\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\sparsloe\Documents\GitHub\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\System.Web.Http.dll
+C:\Users\sparsloe\Documents\GitHub\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\System.Web.Http.WebHost.dll
+C:\Users\sparsloe\Documents\GitHub\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\Newtonsoft.Json.xml
+C:\Users\sparsloe\Documents\GitHub\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\System.Net.Http.Formatting.xml
+C:\Users\sparsloe\Documents\GitHub\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\System.Web.Http.xml
+C:\Users\sparsloe\Documents\GitHub\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\bin\Debug\System.Web.Http.WebHost.xml
+C:\Users\sparsloe\Documents\GitHub\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\obj\Debug\WebApiContrib.Formatting.Siren.dll
+C:\Users\sparsloe\Documents\GitHub\WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren\obj\Debug\WebApiContrib.Formatting.Siren.pdb
