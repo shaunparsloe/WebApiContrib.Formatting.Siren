@@ -42,6 +42,28 @@ namespace WebApiContrib.Formatting.Siren.Tests
         }
 
         [Fact]
+        public void ReadFromStreamAsync_Deserializes_BlankBody_Correctly()
+        {
+            // Arrange
+            Car car = new Car();
+            string inputString =
+                "";
+
+            // Act
+            using (MemoryStream stream = new MemoryStream(System.Text.Encoding.Default.GetBytes(inputString)))
+            {
+                var content = new StreamContent(stream);
+
+                var task = formatter.ReadFromStreamAsync(typeof(Car), stream, content, null);
+                car = task.Result as Car;
+            }
+
+            // Assert
+            Assert.Null(car);
+          
+        }
+
+        [Fact]
         public void ReadFromStreamAsync_Deserializes_Title_Correctly()
         {
             // Arrange
@@ -60,10 +82,9 @@ namespace WebApiContrib.Formatting.Siren.Tests
 
             // Assert
             Assert.Equal("Car Title", car.Title);
-          
+
         }
 
-        
         [Fact]
         public void ReadFromStreamAsync_Deserializes_Actions_Correctly()
         {
