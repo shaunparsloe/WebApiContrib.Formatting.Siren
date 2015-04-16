@@ -259,9 +259,15 @@ namespace WebApiContrib.Formatting.Siren
 
                     string jsonString = strdr.ReadToEnd();
 
-                    // var results = JsonConvert.DeserializeObject<dynamic>(jsonString);
-                    var array = JObject.Parse(jsonString);
-                    return DeSerializeSirenEntity(type, array);
+                    if (jsonString == string.Empty)
+                    {
+                        return null;    // Return null object if nothing passed in to deserialise.
+                    }
+                    else
+                    {
+                        var array = JObject.Parse(jsonString);
+                        return DeSerializeSirenEntity(type, array);
+                    }
                 }
 
                 //using (var strdr = new StreamReader(readStream))
