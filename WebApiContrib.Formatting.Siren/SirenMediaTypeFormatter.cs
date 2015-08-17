@@ -235,7 +235,7 @@ namespace WebApiContrib.Formatting.Siren
         {
             using (var strdr = new StreamReader(readStream))
             using (var jtr = new JsonTextReader(strdr))
-            {                
+            {                                
                 return strdr.ReadToEndAsync()
                     .ContinueWith(result =>
                     {
@@ -254,7 +254,7 @@ namespace WebApiContrib.Formatting.Siren
                             return null;
                         }
                         return DeSerializeSirenEntity(type, jobject);
-                    });
+                    }, TaskScheduler.FromCurrentSynchronizationContext());
             }
         }
 

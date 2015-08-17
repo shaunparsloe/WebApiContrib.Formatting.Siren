@@ -21,7 +21,7 @@ namespace WebApiContrib.MediaType.Hypermedia
             string jsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(objectToSerialize, jsonSerializerSettings);
 
             var writer = new StreamWriter(stream);
-            return writer.WriteAsync(jsonResult).ContinueWith((result) => { writer.Flush(); });
+            return writer.WriteAsync(jsonResult).ContinueWith((result) => { writer.Flush(); }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public static T CreateFromJsonStream<T>(this Stream stream)
