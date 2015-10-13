@@ -327,11 +327,15 @@ namespace WebApiContrib.Formatting.Siren
                                     BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                             if (null != prop && prop.CanWrite)
                             {
-                                if (prop.PropertyType.IsGenericType && objectProperty.Value is IEnumerable)
+                                bool ignore = false;
+                                foreach (var attrib in prop.CustomAttributes)
                                 {
-                                    // TODO: Deserialise collections!
+                                    if (attrib.AttributeType.FullName == "WebApiContrib.Formatting.Siren.SirenIgnoreAttribute")
+                                    {
+                                        ignore = true;
+                                    }
                                 }
-                                else
+                                if (!ignore)
                                 {
                                     var val = Convert.ChangeType(objectProperty.Value, prop.PropertyType);
                                     prop.SetValue(entity, val, null);

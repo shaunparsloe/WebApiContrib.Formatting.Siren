@@ -36,4 +36,11 @@ namespace WebApiContrib.Formatting.Siren.Tests
             this.Href = href.ToString();
         }
     }
+
+    public class Engine
+    {
+        public int Cylinders { get; set; }
+        public double Size { get; set; }
+        public bool Turbocharged { get; set; }
+    }
 }
