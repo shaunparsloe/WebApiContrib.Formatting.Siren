@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using WebApiContrib.MediaType.Hypermedia;
+using System.Collections;
 
 namespace WebApiContrib.Formatting.Siren
 {
@@ -326,11 +327,18 @@ namespace WebApiContrib.Formatting.Siren
                                     BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                             if (null != prop && prop.CanWrite)
                             {
-                                var val = Convert.ChangeType(objectProperty.Value, prop.PropertyType);
-                                prop.SetValue(entity, val, null);
+                                if (prop.PropertyType.IsGenericType && objectProperty.Value is IEnumerable)
+                                {
+                                    // TODO: Deserialise collections!
+                                }
+                                else
+                                {
+                                    var val = Convert.ChangeType(objectProperty.Value, prop.PropertyType);
+                                    prop.SetValue(entity, val, null);
+                                }
                             }
 
-                            entity.Class.Add(propertyName);
+                            // entity.Class.Add(propertyName);
                         }
                         break;
 

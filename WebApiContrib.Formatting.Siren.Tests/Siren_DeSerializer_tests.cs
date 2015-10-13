@@ -137,6 +137,28 @@ namespace WebApiContrib.Formatting.Siren.Tests
         }
 
         [Fact]
+        public void ReadFromStreamAsync_Deserializes_IgnoresUnknownProperties_Correctly()
+        {
+            // Arrange
+            Car car = new Car();
+            string inputString =
+                "{\"class\":[],\"properties\":{\"colour\":\"Black\",\"someRandomProperty\":\"Blue\",\"numberOfWheels\":5},\"entities\":[]}";
+
+            // Act
+            using (MemoryStream stream = new MemoryStream(System.Text.Encoding.Default.GetBytes(inputString)))
+            {
+                var content = new StreamContent(stream);
+
+                var task = formatter.ReadFromStreamAsync(typeof(Car), stream, content, null);
+                car = task.Result as Car;
+            }
+
+            // Assert
+            Assert.Equal("Black", car.Colour);
+            Assert.Equal(5, car.NumberOfWheels);
+        }
+
+        [Fact]
         public void ReadFromStreamAsync_Deserializes_EmbeddedLinks_Correctly()
         {
             // Arrange

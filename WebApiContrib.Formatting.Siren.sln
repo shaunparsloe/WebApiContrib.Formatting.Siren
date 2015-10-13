@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiContrib.Formatting.Siren", "WebApiContrib.Formatting.Siren\WebApiContrib.Formatting.Siren.csproj", "{CF3994F6-C75B-4D0A-8C44-8AB4BC8F0F7F}"
 EndProject
@@ -20,6 +20,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9026AE
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NugetPackager", "NugetPackager", "{8ADFBD11-04BD-42F5-8BFB-7FE94E405EF1}"
+	ProjectSection(SolutionItems) = preProject
+		NuGetPackager\BuildPackage.cmd = NuGetPackager\BuildPackage.cmd
+		NuGetPackager\NuGet.exe = NuGetPackager\NuGet.exe
+		NuGetPackager\PublishPackage.cmd = NuGetPackager\PublishPackage.cmd
+		NuGetPackager\WebApiContrib.Formatting.Siren.nuspec = NuGetPackager\WebApiContrib.Formatting.Siren.nuspec
 	EndProjectSection
 EndProject
 Global

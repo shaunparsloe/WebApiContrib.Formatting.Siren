@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>WebApiContrib.Formatting.Siren</id>
+    <version>1.0.4</version>
+    <title>Siren Media Type Formatter</title>
+    <authors>Fourth Architecture Team</authors>
+    <owners>Fourth Architecture Team</owners>
+    <description>
+      JSON deserialiser to convert to the SIREN API format https://github.com/kevinswiber/siren
+    </description>
+    <releaseNotes>
+      Beta version
+    </releaseNotes>
+    <summary>
+      This package contains the serializer / deserialiser to consume SIREN web api messages. It requires .Net 4.0 or higher.
+    </summary>
+    <language>en-GB</language>
+    <projectUrl>https://github.com/fourth/WebApiContrib.Formatting.Siren</projectUrl>
+    <iconUrl>http://tfs/sites/DefaultCollection/architecture/SiteAssets/Images/Fourth_50x50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Copyright Fourth 2015</copyright>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="7.0.1" />
+    </dependencies>
+    <references>
+      <group targetFramework="net40">
+        <reference file="WebApiContrib.Formatting.Siren.dll" />
+      </group>
+    </references>
+    <tags>Fourth WebAPIContrib Siren Deserialiser</tags>
+  </metadata>
+  <files>
+    <file src="..\WebApiContrib.Formatting.Siren\bin\Release\WebApiContrib.Formatting.Siren.dll" target="lib\net40" />
+  </files>
+
+</package>
