@@ -5,12 +5,13 @@ using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace WebApiContrib.MediaType.Hypermedia
 {
     public static class JsonHelpers
     {
-        public static void WriteJsonToStream(this Stream stream, object objectToSerialize)
+        public static Task WriteJsonToStreamAsync(this Stream stream, object objectToSerialize)
         {
             var jsonSerializerSettings = new JsonSerializerSettings
             {
@@ -19,9 +20,8 @@ namespace WebApiContrib.MediaType.Hypermedia
 
             string jsonResult = Newtonsoft.Json.JsonConvert.SerializeObject(objectToSerialize, jsonSerializerSettings);
 
-            StreamWriter writer = new StreamWriter(stream);
-            writer.Write(jsonResult);
-            writer.Flush();
+            var writer = new StreamWriter(stream);
+            return writer.WriteAsync(jsonResult).ContinueWith((result) => { writer.Flush(); }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public static T CreateFromJsonStream<T>(this Stream stream)

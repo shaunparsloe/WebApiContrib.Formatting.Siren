@@ -64,6 +64,43 @@ namespace WebApiContrib.Formatting.Siren.Tests
         }
 
         [Fact]
+        public void ReadFromStreamAsync_Returns_Null_Empty_Content()
+        {
+            // Arrange
+
+            string inputString = string.Empty;                
+
+            // Act
+            using (MemoryStream stream = new MemoryStream(System.Text.Encoding.Default.GetBytes(inputString)))
+            {
+                var content = new StreamContent(stream);
+
+                var result = formatter.ReadFromStreamAsync(typeof(Car), stream, content, null);
+                // Assert
+                Assert.Null(result.Result);
+            }
+        }
+
+        [Fact]
+        public void ReadFromStreamAsync_Returns_Null_On_Incorrect_Json()
+        {
+            // Arrange
+                     
+            string inputString =
+                "{\"class\":[],\"title\":\"Car Title\",\"properties\":\"numberOfWheels\":0},\"entities\":[]}";
+
+            // Act
+            using (MemoryStream stream = new MemoryStream(System.Text.Encoding.Default.GetBytes(inputString)))
+            {
+                var content = new StreamContent(stream);
+
+                var result = formatter.ReadFromStreamAsync(typeof(Car), stream, content, null);
+                // Assert
+                Assert.Null(result.Result);    
+            }
+        }
+
+        [Fact]
         public void ReadFromStreamAsync_Deserializes_Title_Correctly()
         {
             // Arrange

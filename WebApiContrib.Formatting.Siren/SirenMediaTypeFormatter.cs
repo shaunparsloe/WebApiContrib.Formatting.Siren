@@ -20,7 +20,7 @@ using System.Collections;
 namespace WebApiContrib.Formatting.Siren
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.NamingRules", "SA1309:FieldNamesMustNotBeginWithUnderscore", Justification = "Allowed.")]
-    public class SirenMediaTypeFormatter : JsonMediaTypeFormatter 
+    public sealed class SirenMediaTypeFormatter : JsonMediaTypeFormatter
     {
         private const string _MediaType = "application/vnd.siren+json";
 
@@ -30,19 +30,17 @@ namespace WebApiContrib.Formatting.Siren
 
             // Put this line in so that it does not crash if is is being browsed by a standard browser.
             // By supporting text/html we can 
-            SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html")); 
+            SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
         }
 
         public override bool CanReadType(Type type)
         {
-            bool blnRetval = typeof(IEntity).IsAssignableFrom(type);
-            return blnRetval;
+            return typeof(IEntity).IsAssignableFrom(type);
         }
 
         public override bool CanWriteType(Type type)
         {
-            bool blnRetval = typeof(IEntity).IsAssignableFrom(type);
-            return blnRetval;
+            return typeof(IEntity).IsAssignableFrom(type);
         }
 
         // Set the content headers for the type of document being returned
@@ -54,24 +52,16 @@ namespace WebApiContrib.Formatting.Siren
         // By the time we get to WriteToStreamAsync, it's too late to set the Content Headers
         public override Task WriteToStreamAsync(Type type, object value, Stream stream, System.Net.Http.HttpContent content, System.Net.TransportContext transportContext)
         {
-            return Task.Factory.StartNew(() =>
+
+            if (typeof(IEntity).IsAssignableFrom(type))
             {
-                if (typeof(IEntity).IsAssignableFrom(type))
-                {
-                    var objectToSerialize = SerializeSirenEntity((IEntity)value);
-                    JsonHelpers.WriteJsonToStream(stream, objectToSerialize);
-                }
-            });
+                var objectToSerialize = SerializeSirenEntity((IEntity)value);
+                return JsonHelpers.WriteJsonToStreamAsync(stream, objectToSerialize);
+            }
+
+            //We need to return something anyways
+            return Task.Delay(0);
         }
-
-        //private object BuildSirenDocument(object models, Stream stream, string contenttype)
-        //{
-        //    List<Dictionary<string, object>> items = new List<Dictionary<string, object>>();
-
-        //    items.Add(this.FormatSirenEntity((Entity)models));
-
-        //    return items;
-        //}
 
         private Dictionary<string, object> SerializeSirenEntity(IEntity entityItem)
         {
@@ -244,53 +234,34 @@ namespace WebApiContrib.Formatting.Siren
 
         public override sealed Task<Object> ReadFromStreamAsync(Type type, Stream readStream, HttpContent content, IFormatterLogger formatterLogger)
         {
-
-            var jsonSerializerSettings = new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-
-            var ser = JsonSerializer.Create(jsonSerializerSettings);
-
-            return Task.Factory.StartNew(() =>
-            {
-                using (var strdr = new StreamReader(readStream))
-                using (var jtr = new JsonTextReader(strdr))
-                {
-
-                    string jsonString = strdr.ReadToEnd();
-
-                    if (jsonString == string.Empty)
+            using (var strdr = new StreamReader(readStream))
+            using (var jtr = new JsonTextReader(strdr))
+            {                                
+                return strdr.ReadToEndAsync()
+                    .ContinueWith(result =>
                     {
-                        return null;    // Return null object if nothing passed in to deserialise.
-                    }
-                    else
-                    {
-                        var array = JObject.Parse(jsonString);
-                        return DeSerializeSirenEntity(type, array);
-                    }
-                }
+                        var jsonString = string.Empty;
+                        if (result.IsFaulted || string.IsNullOrEmpty(jsonString = result.Result))
+                            return null;
 
-                //using (var strdr = new StreamReader(readStream))
-                //using (var jtr = new JsonTextReader(strdr))
-                //{
-                //    Dictionary<string, object> deserialized = (Dictionary<string, object>)ser.Deserialize(jtr, typeof(Dictionary<string, object>));
-                //    return DeSerializeSirenEntity(type, deserialized);
-                //}
-            });
+                        JObject jobject;
+                        try
+                        {
+                            jobject = JObject.Parse(jsonString);
+                        }
+                        catch (JsonReaderException)
+                        {
+                            //We shouldn't go silent...
+                            return null;
+                        }
+                        return DeSerializeSirenEntity(type, jobject);
+                    }, TaskScheduler.FromCurrentSynchronizationContext());
+            }
         }
 
         private object DeSerializeSirenEntity(Type type, JObject deserialized)
         {
             dynamic entity = Activator.CreateInstance(type);
-
-            var jsonSerializerSettings = new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-
-            var ser = JsonSerializer.Create(jsonSerializerSettings);
-
 
             foreach (JProperty property in deserialized.Properties())
             {
@@ -361,7 +332,7 @@ namespace WebApiContrib.Formatting.Siren
                                     subEntityJObject.ToObject<WebApiContrib.MediaType.Hypermedia.EmbeddedLink>();
                                 entity.AddSubEntity(link);
                             }
-                            
+
                         }
                         break;
 
