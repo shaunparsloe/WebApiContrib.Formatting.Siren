@@ -26,11 +26,9 @@ namespace WebApiContrib.Formatting.Siren
 
         public SirenMediaTypeFormatter()
         {
+            //Clear Supported media types because base class constructor has modified it to support Json. We only support siren format here.
+            SupportedMediaTypes.Clear();
             SupportedMediaTypes.Add(new MediaTypeHeaderValue(_MediaType));
-
-            // Put this line in so that it does not crash if is is being browsed by a standard browser.
-            // By supporting text/html we can 
-            SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
         }
 
         public override bool CanReadType(Type type)

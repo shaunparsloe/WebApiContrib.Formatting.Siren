@@ -1,1 +1,1 @@
-nuget push WebApiContrib.Formatting.Siren.1.0.7.nupkg asdf -s http://fourthqaportal.cloudapp.net/NuGetServer
+nuget push WebApiContrib.Formatting.Siren.1.0.8.nupkg asdf -s http://fourthqaportal.cloudapp.net/NuGetServer

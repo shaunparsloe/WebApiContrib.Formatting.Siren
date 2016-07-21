@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>WebApiContrib.Formatting.Siren</id>
-    <version>1.0.7</version>
+    <version>1.0.8</version>
     <title>Siren Media Type Formatter</title>
     <authors>Fourth Architecture Team</authors>
     <owners>Fourth Architecture Team</owners>
@@ -10,10 +10,11 @@
       JSON deserialiser to convert to the SIREN API format https://github.com/kevinswiber/siren
     </description>
     <releaseNotes>
-      Beta version
+      Formatter is fixed to support deserialization only for "application/vnd.siren+json" nedia type.
+      Project is converted to the .NET 4.5.2 because Microsoft doesn't support .NET 5.4 any longer.
     </releaseNotes>
     <summary>
-      This package contains the serializer / deserialiser to consume SIREN web api messages. It requires .Net 4.0 or higher.
+      This package contains the serializer / deserialiser to consume SIREN web api messages. It requires .Net 4.5.2 or higher.
     </summary>
     <language>en-GB</language>
     <projectUrl>https://github.com/fourth/WebApiContrib.Formatting.Siren</projectUrl>
